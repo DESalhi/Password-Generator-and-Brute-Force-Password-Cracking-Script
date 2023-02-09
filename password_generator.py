@@ -1,49 +1,48 @@
-import random
 import string
+import random
 import time
-import itertools
 
-def generate_password(length):
-    """Generates a random password of the specified length."""
-    password = ''.join(random.choice(string.ascii_letters + string.digits + string.punctuation) for _ in range(length))
-    return password
+def generate_password(password_length, charset):
+    return ''.join(random.choice(charset) for i in range(password_length))
 
-def crack_password(password, charset):
-    """Brute-force password cracking function."""
-    start = time.time()
-    for attempt in itertools.product(charset, repeat=len(password)):
-        attempt = ''.join(attempt)
+def brute_force_password(password, charset):
+    start_time = time.time()
+    password_guessed = False
+    attempts = 0
+
+    while not password_guessed:
+        attempt = ''.join(random.choice(charset) for i in range(len(password)))
+        attempts += 1
         if attempt == password:
-            end = time.time()
-            time_taken = end - start
-            return time_taken
-    return -1
+            password_guessed = True
+            end_time = time.time()
+            time_taken = end_time - start_time
+            return time_taken, attempts
 
-# Set the desired password length
-password_length = 6
+def main():
+    while True:
+        password_length = input("Enter the length of the password to generate: ")
+        try:
+            password_length = int(password_length)
+            if password_length <= 0:
+                print("Password length must be a positive integer.")
+                continue
+            break
+        except ValueError:
+            print("Password length must be a positive integer.")
 
-# Record the start time of password generation
-start = time.time()
+    while True:
+        charset = input("Enter the characters to use for the password (e.g. abcdefghijklmnopqrstuvwxyz): ")
+        if all(c in string.printable for c in charset):
+            break
+        else:
+            print("Invalid characters in the character set. Please enter only printable ASCII characters.")
 
-# Generate the password
-password = generate_password(password_length)
+    password = generate_password(password_length, charset)
+    print("Password generated:", password)
 
-# Record the end time of password generation
-end = time.time()
+    time_taken, attempts = brute_force_password(password, charset)
+    print("Password cracked in %d attempts and %.2f seconds." % (attempts, time_taken))
 
-# Calculate the time taken to generate the password
-time_taken_gen = end - start
-
-# The character set to use for the brute-force attack
-charset = string.ascii_letters + string.digits + string.punctuation
-
-# Crack the password
-time_taken_crack = crack_password(password, charset)
-
-# Print the generated password, time taken to generate the password, and time taken to crack the password
-print("Generated password: ", password)
-print("Time taken to generate password: {:.2f} seconds".format(time_taken_gen))
-if time_taken_crack == -1:
-    print("Password not found in character set.")
-else:
-    print("Time taken to crack password: {:.2f} seconds".format(time_taken_crack))
+if __name__ == '__main__':
+    main()
