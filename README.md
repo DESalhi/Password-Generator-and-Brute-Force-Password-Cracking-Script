@@ -14,7 +14,7 @@ git clone https://github.com/DESalhi/Password-Generator-and-Brute-Force-Password
 
 2. Navigate to the repository directory:
 
-cd password-generator
+cd Password-Generator-and-Brute-Force-Password-Cracking-Script-main
 
 3. Run the script:
 
