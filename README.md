@@ -10,7 +10,7 @@ This script generates a random password of a specified length and cracks the gen
 
 1. Clone the repository:
 
-git clone https://github.com/DESalhi/Password-Generator-and-Brute-Force-Password-Cracking-Script
+git clone https://github.com/DESalhi/Password-Generator-and-Brute-Force-Password-Cracking-Script.git
 
 2. Navigate to the repository directory:
 
