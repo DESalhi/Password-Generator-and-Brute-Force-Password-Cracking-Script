@@ -44,5 +44,6 @@ def main():
     time_taken, attempts = brute_force_password(password, charset)
     print("Password cracked in %d attempts and %.2f seconds." % (attempts, time_taken))
 
+
 if __name__ == '__main__':
     main()
